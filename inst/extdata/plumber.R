@@ -4,7 +4,7 @@ library(plumber)
 #* @apiTitle mario Plumber API
 #* @apiDescription A plumber API that generates automated videos from Google Slides or PowerPoint slides.
 
-#* Health Check - Is the API running??
+#* Health Check - Is the API running?
 #* @get /health_check
 function() {
   list(
