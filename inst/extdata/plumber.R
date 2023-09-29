@@ -1,7 +1,7 @@
 # Packages ----
 library(plumber)
 
-#* @apiTitle mario Plumber API
+#* @apiTitle ari Plumber API
 #* @apiDescription A plumber API that generates automated videos from Google Slides or PowerPoint slides.
 
 #* Health Check - Is the API running?
