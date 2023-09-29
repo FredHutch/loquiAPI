@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  mario2:
+    image: sc-registry.fredhutch.org/mario2:latest
+    networks:
+      - proxy
+    deploy:
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.mario2.rule=Host(`mario2.fredhutch.org`)"
+        - "traefik.http.routers.mario2-secured.rule=Host(`mario2.fredhutch.org`)"
+        - "traefik.http.routers.mario2.entrypoints=web,web-secured"
+        - "traefik.http.services.mario2.loadbalancer.server.port=9876" # it seems you always need to give traefik a port so it 'notices' the service
+        - "traefik.http.routers.mario2.tls=true"
+
+networks:
+  proxy:
+    external: true
