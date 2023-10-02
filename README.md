@@ -6,8 +6,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of mario2 is to let users programmatically generate automated
-videos from Google Slides or PowerPoint slides.
+The goal of mario2 is to empower users to programmatically generate
+automated videos from Google Slides or Microsoft PowerPoint slides. By
+utilizing the API hosted on Fred Hutch’s servers, accessible at
+<https://mario2.fredhutch.org/__docs__/> and using R functions like
+`mario_generate_from_gs()`, users gain the ability to produce numerous
+videos simultaneously from various sets of slides in Google Slides or
+PowerPoint.
 
 ## Installation
 
