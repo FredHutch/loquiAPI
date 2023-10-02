@@ -1,4 +1,7 @@
-# URL that contains API
+#' URL for mario Plumber API hosted on Fred Hutch's servers
+#'
+#' https://mario2.fredhutch.org
+#'
 #' @export
 mario_api_url <- function() {
   "https://mario2.fredhutch.org"
@@ -8,6 +11,7 @@ mario_api_url <- function() {
 #'
 #' Check if the API is running
 #'
+#' @param api_url URL for API
 #' @export
 mario_health_check <- function(api_url = mario_api_url()) {
   # GET url
@@ -26,6 +30,7 @@ mario_health_check <- function(api_url = mario_api_url()) {
 #' @param model_name The voice used to synthesize the audio
 #' @param vocoder_name Voice coder used for speech coding and transmission
 #' @param api_url URL that contains API
+#' @param ... Other parameters passed to \code{httr::GET()}
 #' @return Response from the API
 #' @export
 mario_generate_from_gs = function(link,
