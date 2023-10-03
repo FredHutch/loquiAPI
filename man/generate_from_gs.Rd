@@ -9,7 +9,7 @@ generate_from_gs(
   service = "coqui",
   model_name = "jenny",
   vocoder_name = "jenny",
-  api_url = api_url(),
+  api_url = loqui_api_url(),
   ...
 )
 }
