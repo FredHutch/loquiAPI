@@ -1,13 +1,17 @@
-# URL that contains API
+#' URL for mario Plumber API hosted on Fred Hutch's servers
+#'
+#' https://mario2.fredhutch.org
+#'
 #' @export
 mario_api_url <- function() {
-  # TODO: Put URL once API is deployed to FH servers
+  "https://mario2.fredhutch.org"
 }
 
 #' Health Check
 #'
 #' Check if the API is running
 #'
+#' @param api_url URL for API
 #' @export
 mario_health_check <- function(api_url = mario_api_url()) {
   # GET url
@@ -26,14 +30,15 @@ mario_health_check <- function(api_url = mario_api_url()) {
 #' @param model_name The voice used to synthesize the audio
 #' @param vocoder_name Voice coder used for speech coding and transmission
 #' @param api_url URL that contains API
+#' @param ... Other parameters passed to \code{httr::GET()}
 #' @return Response from the API
 #' @export
-mario_generate_gs = function(link,
-                             service,
-                             model_name,
-                             vocoder_name,
-                             api_url = mario_api_url(),
-                             ...) {
+mario_generate_from_gs = function(link,
+                                  service = "coqui",
+                                  model_name = "jenny",
+                                  vocoder_name = "jenny",
+                                  api_url = mario_api_url(),
+                                  ...) {
   # Collect user input
   body = list(
     link = link,
@@ -41,17 +46,15 @@ mario_generate_gs = function(link,
     model_name = model_name,
     vocoder_name = vocoder_name
   )
-  # POST
-  response <- httr::POST(
-    url = paste0(api_url, "/generate_gs"),
-    body = body,
+  # GET
+  response <- httr::GET(
+    url = paste0(api_url, "/generate_from_gs"),
+    query = body,
     ...)
 
   # Originally from mario::mario_write_video()
   httr::stop_for_status(response)
   bin_data = httr::content(response)
-  bin_data = bin_data$video[[1]]
-  bin_data = base64enc::base64decode(bin_data)
   output = tempfile(fileext = ".mp4")
   writeBin(bin_data, output)
 
