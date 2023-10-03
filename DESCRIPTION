@@ -1,9 +1,9 @@
-Package: mario2
+Package: loquiAPI
 Title: Web API for Generating Automated Videos 
 Version: 0.0.0.900
 Authors@R: 
     person("Howard", "Baek", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           comment = c(ORCID = "0009-0000-8942-1618"))
 Description: Leverages the 'ari' package and other related packages to create automated 
     videos.
 License: MIT + file LICENSE
