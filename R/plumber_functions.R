@@ -1,10 +1,10 @@
-#' URL for mario Plumber API hosted on Fred Hutch's servers
+#' URL for the Plumber API hosted on Fred Hutch's servers
 #'
-#' https://mario2.fredhutch.org
+#' https://loquiapi.fredhutch.org
 #'
 #' @export
-mario_api_url <- function() {
-  "https://mario2.fredhutch.org"
+api_url <- function() {
+  "https://loquiapi.fredhutch.org"
 }
 
 #' Health Check
@@ -13,7 +13,7 @@ mario_api_url <- function() {
 #'
 #' @param api_url URL for API
 #' @export
-mario_health_check <- function(api_url = mario_api_url()) {
+health_check <- function(api_url = api_url()) {
   # GET url
   response <- httr::GET(paste0(api_url, "/health_check"))
   httr::stop_for_status(response)
@@ -33,11 +33,11 @@ mario_health_check <- function(api_url = mario_api_url()) {
 #' @param ... Other parameters passed to \code{httr::GET()}
 #' @return Response from the API
 #' @export
-mario_generate_from_gs = function(link,
+generate_from_gs = function(link,
                                   service = "coqui",
                                   model_name = "jenny",
                                   vocoder_name = "jenny",
-                                  api_url = mario_api_url(),
+                                  api_url = api_url(),
                                   ...) {
   # Collect user input
   body = list(
