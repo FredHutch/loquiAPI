@@ -31,7 +31,7 @@ health_check <- function(api_url = api_url()) {
 #' @param vocoder_name Voice coder used for speech coding and transmission
 #' @param api_url URL that contains API
 #' @param ... Other parameters passed to \code{httr::GET()}
-#' @return Response from the API
+#' @return Path to video output
 #' @export
 generate_from_gs = function(link,
                             service = "coqui",

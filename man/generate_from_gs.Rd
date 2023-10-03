@@ -27,7 +27,7 @@ generate_from_gs(
 \item{...}{Other parameters passed to \code{httr::GET()}}
 }
 \value{
-Response from the API
+Path to video output
 }
 \description{
 Generate video from Google Slides
