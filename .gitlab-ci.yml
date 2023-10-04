@@ -19,16 +19,16 @@ stages:
 build:
   stage: build
   script:
-    - docker build -t sc-registry.fredhutch.org/mario2:test .
-    - docker push sc-registry.fredhutch.org/mario2:test
+    - docker build -t sc-registry.fredhutch.org/loquiapi:test .
+    - docker push sc-registry.fredhutch.org/loquiapi:test
 
 test:
   stage: test
   services: 
-    - name: sc-registry.fredhutch.org/mario2:test
-      alias: mario2
+    - name: sc-registry.fredhutch.org/loquiapi:test
+      alias: loquiapi
   script:
-    - sleep 15 && curl -sI  http://mario2:9876/__docs__/  |head -1|grep -q "200 OK"
+    - sleep 15 && curl -sI  http://loquiapi:9876/__docs__/  |head -1|grep -q "200 OK"
 
 deploy:
   stage: deploy
@@ -36,9 +36,9 @@ deploy:
     refs:
         - main
   script:
-    - docker tag sc-registry.fredhutch.org/mario2:test sc-registry.fredhutch.org/mario2:latest
-    - docker push sc-registry.fredhutch.org/mario2:latest
+    - docker tag sc-registry.fredhutch.org/loquiapi:test sc-registry.fredhutch.org/loquiapi:latest
+    - docker push sc-registry.fredhutch.org/loquiapi:latest
     - sleep 15
     - echo $SC_SWARM_CICD_SSH_KEY | base64 -d > ./sc_swarm_cicd_ssh_key
     - chmod 0400 ./sc_swarm_cicd_ssh_key
-    - python3 build_helper.py docker-compose.yml | ssh -i ./sc_swarm_cicd_ssh_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@sc-swarm-mgr.fhcrc.org docker stack deploy --with-registry-auth -c - mario2
+    - python3 build_helper.py docker-compose.yml | ssh -i ./sc_swarm_cicd_ssh_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@sc-swarm-mgr.fhcrc.org docker stack deploy --with-registry-auth -c - loquiapi
