@@ -3,7 +3,7 @@
 #' https://loquiapi.fredhutch.org
 #'
 #' @export
-api_url <- function() {
+loqui_api_url <- function() {
   "https://loquiapi.fredhutch.org"
 }
 
@@ -31,14 +31,14 @@ health_check <- function(api_url = api_url()) {
 #' @param vocoder_name Voice coder used for speech coding and transmission
 #' @param api_url URL that contains API
 #' @param ... Other parameters passed to \code{httr::GET()}
-#' @return Response from the API
+#' @return Path to video output
 #' @export
 generate_from_gs = function(link,
-                                  service = "coqui",
-                                  model_name = "jenny",
-                                  vocoder_name = "jenny",
-                                  api_url = api_url(),
-                                  ...) {
+                            service = "coqui",
+                            model_name = "jenny",
+                            vocoder_name = "jenny",
+                            api_url = loqui_api_url(),
+                            ...) {
   # Collect user input
   body = list(
     link = link,

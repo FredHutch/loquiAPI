@@ -9,7 +9,7 @@ generate_from_gs(
   service = "coqui",
   model_name = "jenny",
   vocoder_name = "jenny",
-  api_url = api_url(),
+  api_url = loqui_api_url(),
   ...
 )
 }
@@ -27,7 +27,7 @@ generate_from_gs(
 \item{...}{Other parameters passed to \code{httr::GET()}}
 }
 \value{
-Response from the API
+Path to video output
 }
 \description{
 Generate video from Google Slides
