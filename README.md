@@ -35,3 +35,11 @@ library(loquiAPI)
 
 generate_from_gs(link = "https://docs.google.com/presentation/d/1Dw_rBb1hySN_76xh9-x5J2dWF_das9BAUjQigf2fN-E/edit#slide=id.p")
 ```
+
+## More Voice Options
+
+If you’d like to explore different voices but aren’t certain about the
+available options, you can visit the
+[CoquiTTS](https://huggingface.co/spaces/coqui/CoquiTTS) Hugging Face
+Space. Once you find a voice you like, please let me know by submitting
+a GitHub issue and I will make sure to include it.
