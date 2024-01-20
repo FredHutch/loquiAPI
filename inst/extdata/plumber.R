@@ -1,5 +1,7 @@
 # Packages ----
 library(plumber)
+library(future)
+plan(multisession, workers = 25)
 
 #* @apiTitle Loqui API
 #* @apiDescription A plumber API that generates automated videos from Google Slides or PowerPoint slides.
@@ -24,6 +26,7 @@ function(link, service, model_name, vocoder_name){
   # Temporary file
   tmp_video <- tempfile(fileext = ".mp4")
 
+  future::future({
   # Speaker Notes
   pptx_path <- gsplyr::download(link, type = "pptx")
   pptx_notes_vector <- ptplyr::extract_notes(pptx_path)
@@ -39,6 +42,7 @@ function(link, service, model_name, vocoder_name){
                            service = service,
                            model_name = model_name,
                            vocoder_name = vocoder_name))
+  })
 
   readBin(tmp_video, "raw", n = file.info(tmp_video)$size)
 }
