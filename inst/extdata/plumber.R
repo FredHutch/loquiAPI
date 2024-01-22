@@ -27,22 +27,22 @@ function(link, service, model_name, vocoder_name){
   tmp_video <- tempfile(fileext = ".mp4")
 
   future::future({
-  # Speaker Notes
-  pptx_path <- gsplyr::download(link, type = "pptx")
-  pptx_notes_vector <- ptplyr::extract_notes(pptx_path)
-  # Images
-  pdf_path <- gsplyr::download(link, type = "pdf")
-  image_path <- ptplyr::convert_pdf_png(pdf_path)
+    # Speaker Notes
+    pptx_path <- gsplyr::download(link, type = "pptx")
+    pptx_notes_vector <- ptplyr::extract_notes(pptx_path)
+    # Images
+    pdf_path <- gsplyr::download(link, type = "pdf")
+    image_path <- ptplyr::convert_pdf_png(pdf_path)
 
-  res <- ari::ari_spin(images = image_path,
-                       paragraphs = pptx_notes_vector,
-                       output = tmp_video,
-                       tts_engine_args =
-                         list(
-                           service = service,
-                           model_name = model_name,
-                           vocoder_name = vocoder_name))
+    ari::ari_spin(images = image_path,
+                  paragraphs = pptx_notes_vector,
+                  output = tmp_video,
+                  tts_engine_args =
+                    list(
+                      service = service,
+                      model_name = model_name,
+                      vocoder_name = vocoder_name))
+    # Read binary data from tmp_video as raw mode
+    readBin(tmp_video, "raw", n = file.info(tmp_video)$size)
   })
-
-  readBin(tmp_video, "raw", n = file.info(tmp_video)$size)
 }
