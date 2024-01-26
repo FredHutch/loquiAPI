@@ -9,10 +9,14 @@
 The goal of loquiAPI is to empower users to programmatically generate
 automated videos from Google Slides or Microsoft PowerPoint slides. By
 utilizing the API hosted on Fred Hutch’s servers, accessible at
-<https://loquiapi.fredhutch.org/__docs__/> and using R functions like
+<https://loquiapi.fredhutch.org/__docs__/>, and using R functions like
 `generate_from_gs()`, users gain the ability to produce numerous videos
 simultaneously from various sets of slides in Google Slides or
 PowerPoint.
+
+Inspiration for R code packaged together with aplumber API was drawn
+from this [Posit Community
+post](https://community.rstudio.com/t/plumber-api-and-package-structure/18099).
 
 ## Installation
 
