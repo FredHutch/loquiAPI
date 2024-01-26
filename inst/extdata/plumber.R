@@ -23,10 +23,11 @@ function() {
 #* @serializer contentType list(type="video/mp4")
 #* @get /generate_from_gs
 function(link, service, model_name, vocoder_name){
-  # Temporary file
-  tmp_video <- tempfile(fileext = ".mp4")
 
   future::future({
+    # Temporary file
+    tmp_video <- tempfile(fileext = ".mp4")
+
     # Speaker Notes
     pptx_path <- gsplyr::download(link, type = "pptx")
     pptx_notes_vector <- ptplyr::extract_notes(pptx_path)
