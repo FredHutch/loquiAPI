@@ -13,7 +13,7 @@ loqui_api_url <- function() {
 #'
 #' @param api_url URL for API
 #' @export
-health_check <- function(api_url = api_url()) {
+health_check <- function(api_url = loqui_api_url()) {
   # GET url
   response <- httr::GET(paste0(api_url, "/health_check"))
   httr::stop_for_status(response)
