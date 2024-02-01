@@ -14,6 +14,9 @@ utilizing the API hosted on Fred Hutch’s servers, accessible at
 simultaneously from various sets of slides in Google Slides or
 PowerPoint.
 
+*The API performs optimally when the user is connected to the Fred Hutch
+VPN.*
+
 Inspiration for R code packaged together with aplumber API was drawn
 from this [Posit Community
 post](https://community.rstudio.com/t/plumber-api-and-package-structure/18099).
