@@ -30,6 +30,7 @@ health_check <- function(api_url = loqui_api_url()) {
 #' @param model_name The voice used to synthesize the audio
 #' @param vocoder_name Voice coder used for speech coding and transmission
 #' @param api_url URL that contains API
+#' @param output Path video output
 #' @param ... Other parameters passed to \code{httr::GET()}
 #' @return Path to video output
 #' @export
@@ -60,5 +61,7 @@ generate_from_gs = function(link,
   } else {
     message(paste0("HTTP Error ", response_status$status_code))
   }
+
+  invisible(output)
 }
 

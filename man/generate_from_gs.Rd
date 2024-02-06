@@ -10,6 +10,7 @@ generate_from_gs(
   model_name = "jenny",
   vocoder_name = "jenny",
   api_url = loqui_api_url(),
+  output = "video.mp4",
   ...
 )
 }
@@ -23,6 +24,8 @@ generate_from_gs(
 \item{vocoder_name}{Voice coder used for speech coding and transmission}
 
 \item{api_url}{URL that contains API}
+
+\item{output}{Path video output}
 
 \item{...}{Other parameters passed to \code{httr::GET()}}
 }
