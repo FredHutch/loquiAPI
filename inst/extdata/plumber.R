@@ -21,7 +21,7 @@ function() {
 #* @param model_name
 #* @param vocoder_name
 #* @serializer contentType list(type="video/mp4")
-#* @get /generate_from_gs
+#* @post /generate_from_gs
 function(link, service, model_name, vocoder_name){
 
   future::future({
@@ -39,11 +39,11 @@ function(link, service, model_name, vocoder_name){
                   paragraphs = pptx_notes_vector,
                   output = tmp_video,
                   tts_engine_args =
-                    list(
-                      service = service,
-                      model_name = model_name,
-                      vocoder_name = vocoder_name))
-    # Read binary data from tmp_video as raw mode
-    readBin(tmp_video, "raw", n = file.info(tmp_video)$size)
+                    list(service = service,
+                         model_name = model_name,
+                         vocoder_name = vocoder_name))
+
+    # Get file download
+    plumber::as_attachment(readBin(tmp_video, "raw", n = file.info(tmp_video)$size), "video.mp4")
   })
 }
