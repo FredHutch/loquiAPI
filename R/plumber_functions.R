@@ -38,6 +38,7 @@ generate_from_gs = function(link,
                             model_name = "jenny",
                             vocoder_name = "jenny",
                             api_url = loqui_api_url(),
+                            output = "video.mp4",
                             ...) {
   # Collect user input
   body = list(
@@ -46,18 +47,18 @@ generate_from_gs = function(link,
     model_name = model_name,
     vocoder_name = vocoder_name
   )
-  # GET
-  response <- httr::GET(
+  # POST
+  response <- httr::POST(
     url = paste0(api_url, "/generate_from_gs"),
     query = body,
-    ...)
+    httr::write_disk(output))
 
-  # Originally from mario::mario_write_video()
-  httr::stop_for_status(response)
-  bin_data = httr::content(response)
-  output = tempfile(fileext = ".mp4")
-  writeBin(bin_data, output)
-
-  output
+  # Tell user whether POST request has been completed.
+  response_status <- httr::stop_for_status(response)
+  if (response_status$status_code == 200) {
+    message(paste0("Rendered video is available in your working directory as ", output))
+  } else {
+    message(paste0("HTTP Error ", response_status$status_code))
+  }
 }
 
