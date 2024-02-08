@@ -1,19 +1,22 @@
 # Packages ----
 library(plumber)
 library(future)
+library(promises)
+library(jsonlite)
 plan(multisession, workers = 25)
+
+# Initialize an environment to store the promises
+promise_env <- new.env()
+
+# Generate a unique ID for each task
+generate_id <- function() {
+  length_env <- length(ls(envir = promise_env))
+  id <- as.character(length_env + 1)
+  return(id)
+}
 
 #* @apiTitle Loqui API
 #* @apiDescription A plumber API that generates automated videos from Google Slides.
-
-#* Health Check - Is the API running?
-#* @get /health_check
-function() {
-  list(
-    status = "Health Check: All Good",
-    time = Sys.time()
-  )
-}
 
 #* Generate Automated Video from Google Slides
 #* @param link URL of Google Slide
@@ -23,8 +26,10 @@ function() {
 #* @serializer contentType list(type="video/mp4")
 #* @post /generate_from_gs
 function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
+  # Generate unique id for task
+  id <- generate_id()
 
-  future::future({
+  assign(id, future({
     # Temporary file
     tmp_video <- tempfile(fileext = ".mp4")
 
@@ -43,7 +48,26 @@ function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
                          model_name = model_name,
                          vocoder_name = vocoder_name))
 
-    # Get file download
-    plumber::as_attachment(readBin(tmp_video, "raw", n = file.info(tmp_video)$size), "video.mp4")
-  })
+    readBin(tmp_video, "raw", n = file.info(tmp_video)$size)
+  }), envir = promise_env)
+
+  return(list(id = id))
+}
+
+# Define the /status endpoint
+#* @param id The ID of the task
+#* @get /status
+function(id) {
+  if (!exists(id, envir = promise_env)) {
+    return("Invalid ID")
+  }
+
+  promise <- get(id, envir = promise_env)
+
+  if (resolved(promise)) {
+    result <- value(promise)
+    return(list(result = unbox(result[1])))
+  } else {
+    return("running")
+  }
 }
