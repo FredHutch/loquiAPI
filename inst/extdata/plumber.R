@@ -4,7 +4,7 @@ library(future)
 plan(multisession, workers = 25)
 
 #* @apiTitle Loqui API
-#* @apiDescription A plumber API that generates automated videos from Google Slides or PowerPoint slides.
+#* @apiDescription A plumber API that generates automated videos from Google Slides.
 
 #* Health Check - Is the API running?
 #* @get /health_check
@@ -16,13 +16,13 @@ function() {
 }
 
 #* Generate Automated Video from Google Slides
-#* @param link
-#* @param service
-#* @param model_name
-#* @param vocoder_name
+#* @param link URL of Google Slide
+#* @param service Text-to-speech Engine.
+#* @param model_name Model for Text-to-Speech Conversion.
+#* @param vocoder_name Voice Coder used for speech coding and transmission.
 #* @serializer contentType list(type="video/mp4")
 #* @post /generate_from_gs
-function(link, service, model_name, vocoder_name){
+function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
 
   future::future({
     # Temporary file
