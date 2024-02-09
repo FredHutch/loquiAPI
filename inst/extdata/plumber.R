@@ -19,6 +19,7 @@ generate_id <- function() {
 #* @apiDescription A plumber API that generates automated videos from Google Slides.
 
 #* Generate Automated Video from Google Slides
+#* # User: "link to google slides"
 #* @param link URL of Google Slide
 #* @param service Text-to-speech Engine.
 #* @param model_name Model for Text-to-Speech Conversion.
@@ -46,16 +47,12 @@ function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
                     list(service = service,
                          model_name = model_name,
                          vocoder_name = vocoder_name))
-
-    # Get file download
-    plumber::as_attachment(readBin(tmp_video, "raw", n = file.info(tmp_video)$size),
-                           "video.mp4")
-  }), envir = promise_env)
-
+  ## TODO: Is there a reason we can't just return the id itself and it is returned as a list?
   return(list(id = id))
 }
 
 # Define the /status endpoint
+# User: GET "ID"
 #* @param id The ID of the task
 #* @get /status
 function(id) {
@@ -66,18 +63,26 @@ function(id) {
   promise <- get(id, envir = promise_env)
 
   if (resolved(promise)) {
-    return("complete")
+    return("Complete")
   } else {
-    return("running")
+    return("Running")
   }
 }
 
 # Define the /result endpoint
+# User: Retrieve the video
 #* @param id The ID of the task
 #* @get /result
 function(id) {
   promise <- get(id, envir = promise_env)
   result <- value(promise)
+
+  ### TODO figure out how the video is downloaded with respect to the future package
+  # Get file download
+  # This line below may go under `request_status` instead
+  plumber::as_attachment(readBin(tmp_video, "raw", n = file.info(tmp_video)$size),
+                         "video.mp4")
+}), envir = promise_env)
   return(result)
 }
 
