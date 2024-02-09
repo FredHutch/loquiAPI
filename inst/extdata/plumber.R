@@ -23,7 +23,6 @@ generate_id <- function() {
 #* @param service Text-to-speech Engine.
 #* @param model_name Model for Text-to-Speech Conversion.
 #* @param vocoder_name Voice Coder used for speech coding and transmission.
-#* @serializer contentType list(type="video/mp4")
 #* @post /generate_from_gs
 function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
   # Generate unique id for task
@@ -48,7 +47,9 @@ function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
                          model_name = model_name,
                          vocoder_name = vocoder_name))
 
-    readBin(tmp_video, "raw", n = file.info(tmp_video)$size)
+    # Get file download
+    plumber::as_attachment(readBin(tmp_video, "raw", n = file.info(tmp_video)$size),
+                           "video.mp4")
   }), envir = promise_env)
 
   return(list(id = id))
@@ -65,9 +66,18 @@ function(id) {
   promise <- get(id, envir = promise_env)
 
   if (resolved(promise)) {
-    result <- value(promise)
-    return(list(result = unbox(result[1])))
+    return("complete")
   } else {
     return("running")
   }
 }
+
+# Define the /result endpoint
+#* @param id The ID of the task
+#* @get /result
+function(id) {
+  promise <- get(id, envir = promise_env)
+  result <- value(promise)
+  return(result)
+}
+
