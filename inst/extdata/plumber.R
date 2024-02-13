@@ -46,10 +46,6 @@ function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
                     list(service = service,
                          model_name = model_name,
                          vocoder_name = vocoder_name))
-
-    # Get file download
-    plumber::as_attachment(readBin(tmp_video, "raw", n = file.info(tmp_video)$size),
-                           "video.mp4")
   }), envir = promise_env)
 
   return(list(id = id))
@@ -74,10 +70,12 @@ function(id) {
 
 # Define the /result endpoint
 #* @param id The ID of the task
-#* @get /result
+#* @post /result
 function(id) {
+
   promise <- get(id, envir = promise_env)
   result <- value(promise)
-  return(result)
+
+  result
 }
 
