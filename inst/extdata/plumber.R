@@ -66,9 +66,9 @@ function(id) {
   promise <- get(id, envir = promise_env)
 
   if (resolved(promise)) {
-    return("complete")
+    return("Complete")
   } else {
-    return("running")
+    return("Running")
   }
 }
 
