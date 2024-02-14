@@ -17,9 +17,9 @@ generate_id <- function() {
 }
 
 #* @apiTitle Loqui API
-#* @apiDescription A plumber API that generates automated videos from Google Slides.
+#* @apiDescription A plumber API that generates automated videos from Google Slides. R package can be found here: https://github.com/FredHutch/loquiAPI
 
-#* Generate Automated Video from Google Slides
+#* Generate Automated Video from Google Slides.
 #* @param link URL of Google Slide
 #* @param service Text-to-speech Engine.
 #* @param model_name Model for Text-to-Speech Conversion.
@@ -52,7 +52,7 @@ function(link, service = "coqui", model_name = "jenny", vocoder_name = "jenny"){
   return(list(id = id))
 }
 
-# Define the /status endpoint
+#* Check on the status of POST request.
 #* @param id The ID of the task
 #* @get /status
 function(id) {
@@ -69,7 +69,7 @@ function(id) {
   }
 }
 
-# Define the /result endpoint
+#* Output the result of the POST request.
 #* @param id The ID of the task
 #* @post /result
 function(id) {
