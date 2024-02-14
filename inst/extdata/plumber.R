@@ -4,6 +4,7 @@ library(future)
 library(promises)
 library(jsonlite)
 plan(multisession, workers = 25)
+options(future.rng.onMisuse = "ignore")
 
 # Initialize an environment to store the promises
 promise_env <- new.env()
