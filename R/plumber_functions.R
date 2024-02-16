@@ -57,7 +57,7 @@ post_video_creation = function(link,
   # Tell user whether POST request has been completed.
   response_status <- httr::stop_for_status(response)
   if (response_status$status_code == 200) {
-    message("Video creation request posted")
+    message("Video creation request posted. Request Id: ", response_content$id[[1]])
   } else {
     message(paste0("HTTP Error ", response_status$status_code))
   }
