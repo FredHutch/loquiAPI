@@ -26,11 +26,10 @@ jobs:
           fetch-depth: 0
 
       - name: Run the tests
-        run: |
-          devtools::test()
+        run: devtools::test()
         shell: Rscript {0}
 
-      - name: Check testthat
+      - name: Check testthat results
         id: check_check
         run: |
             error_num=$(Rscript --vanilla '.github/workflows/check_testthat.R')
@@ -44,5 +43,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@main
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          name: 
           path: check

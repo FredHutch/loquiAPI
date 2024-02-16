@@ -4,8 +4,10 @@ library(loquiAPI)
 
 port <- plumber:::findPort()
 
+root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
+
 # Start up API locally
-system(paste("Rscript runAPI.R", port), wait = FALSE)
+system(paste0("Rscript ", file.path(root_dir, "runAPI.R "), port), wait = FALSE)
 
 # Check that API on Hutch servers is running
 testthat::test_that("Check Default URL", {
@@ -28,18 +30,36 @@ testthat::test_that("Posting video", {
                     vocoder_name = "jenny",
                     api_url = api_url)
 
+  testthat::expect_type(request_id, "character")
 
-  ##TODO: Some tests here
 })
 
 testthat::test_that("Checking status", {
-  request_status(request_id, api_url)
 
-  ##TODO: Some tests here
+  request_id <- post_video_creation(link = test_slides,
+                                    service = "coqui",
+                                    model_name = "jenny",
+                                    vocoder_name = "jenny",
+                                    api_url = api_url)
+
+  status <- request_status(request_id, api_url)
+
+  Sys.sleep(2)
+
+  testthat::expect_equal(status, "Complete")
 })
 
 testthat::test_that("Checking status", {
+  request_id <- post_video_creation(link = test_slides,
+                                    service = "coqui",
+                                    model_name = "jenny",
+                                    vocoder_name = "jenny",
+                                    api_url = api_url)
+  # Give it a second to complete
+  Sys.sleep(5)
+
   download_video(request_id, api_url, "test.mp4")
 
-  ##TODO: Some tests here
+  # We expect the file will exist!
+  testthat::expect_condition(file.exist("test.mp4"))
 })
