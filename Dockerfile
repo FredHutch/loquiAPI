@@ -63,4 +63,4 @@ RUN R -f check.R --args animation didactr rmarkdown plumber base64enc mime testt
 EXPOSE 9876
 
 
-CMD R -f runAPI.R 9876
+CMD R -f runAPI.R --args 9876
