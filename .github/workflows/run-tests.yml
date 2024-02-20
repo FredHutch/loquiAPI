@@ -26,7 +26,9 @@ jobs:
           fetch-depth: 0
 
       - name: Run the tests
-        run: devtools::test()
+        run: |
+          install.packages("devtools")
+          devtools::test()
         shell: Rscript {0}
 
       - name: Check testthat results
@@ -43,5 +45,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@main
         with:
-          name: 
+          name:
           path: check
