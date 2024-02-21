@@ -113,14 +113,3 @@ download_video <- function(id, api_url, output_path) {
   # Write binary data to output_path
   writeBin(binary_data, output_path)
 }
-
-
-
-
-
-
-
-
-
-
-
