@@ -4,9 +4,10 @@ library(loquiAPI)
 
 port <- plumber:::findPort()
 
+root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 
 # Start up API locally
-system(paste("Rscript", system.file("runAPI.R", package = "loquiAPI"), port), wait = FALSE)
+system(paste("Rscript", file.path(root_dir, "runAPI.R"), port), wait = FALSE)
 
 # Check that API on Hutch servers is running
 testthat::test_that("Check Default URL", {
