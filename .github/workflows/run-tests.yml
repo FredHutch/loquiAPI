@@ -27,5 +27,5 @@ jobs:
 
       - name: Run the tests
         run: |
-          source(.github/workflows/tests.R)
+          source(".github/workflows/tests.R")
         shell: Rscript {0}
