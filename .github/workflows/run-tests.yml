@@ -34,8 +34,8 @@ jobs:
       - name: Check testthat results
         id: check_check
         run: |
-            error_num=$(Rscript --vanilla '.github/workflows/check_testthat.R')
-            echo "error_num=$error_num" >> $GITHUB_OUTPUT
+          error_num=$(Rscript --vanilla '.github/workflows/check_testthat.R')
+          echo "error_num=$error_num" >> $GITHUB_OUTPUT
 
       - name: Stop if there are errors!
         if: ${{ steps.check_check.outputs.error_num != '0' }}
