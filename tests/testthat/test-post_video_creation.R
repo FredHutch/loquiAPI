@@ -4,7 +4,7 @@ library(loquiAPI)
 
 port <- plumber:::findPort()
 
-root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
+root_dir <- rprojroot::find_root(rprojroot::has_file("runAPI.R"))
 
 # Start up API locally
 system(paste0("Rscript ", file.path(root_dir, "runAPI.R "), port), wait = FALSE)
