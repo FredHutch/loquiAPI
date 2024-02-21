@@ -4,6 +4,8 @@ RUN echo break cache0
 
 RUN apt-get --allow-releaseinfo-change update -y
 
+RUN apt-get update
+
 RUN apt-get install -y libpoppler-cpp-dev ffmpeg libharfbuzz-dev libfribidi-dev
 RUN apt-get install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev libsodium-dev libmagick++-dev
 
@@ -19,13 +21,44 @@ RUN make -j `nproc`
 
 RUN make altinstall
 
+RUN python3.9 -m pip install --upgrade pip
 RUN python3.9 -m ensurepip
 
 RUN python3.9 -m pip install TTS mecab-python3 unidic-lite
 
 RUN echo break cache0
 
-RUN R -e "install.packages(c('plumber', 'ariExtra', 'rmarkdown', 'animation', 'base64enc', 'pagedown', 'mime', 'testthat', 'covr', 'knitr', 'httr', 'googledrive', 'jsonlite', 'gargle', 'googlesheets4', 'remotes', 'pdftools', 'tidyr', 'text2speech', 'shinyWidgets', 'aws.polly', 'shinyjs', 'blastula', 'promises', 'future', 'ipc', 'shinyFeedback', 'magrittr', 'devtools', 'rprojroot'), repos='https://cran.rstudio.com/')"
+RUN Rscript -e  "options(warn = 2);install.packages(c( \
+  'plumber', \
+  'rmarkdown', \
+  'animation', \
+  'base64enc', \
+  'pagedown', \
+  'mime', \
+  'testthat', \
+  'covr', \
+  'knitr', \ 
+  'httr', \
+  'googledrive', \
+  'jsonlite', \
+  'gargle', \
+  'googlesheets4', \
+  'remotes', \
+  'pdftools', \
+  'tidyr', \
+  'text2speech', \
+  'shinyWidgets', \
+  'aws.polly', \
+  'shinyjs', \
+  'blastula', \
+  'promises', \
+  'future', \
+  'ipc', \
+  'shinyFeedback', \
+  'magrittr', \
+  'devtools', \
+  'rprojroot' \
+  ), repos='https://cran.rstudio.com/')"
 
 ARG GITHUB_PAT
 
@@ -38,12 +71,9 @@ RUN R -e 'remotes::install_github("fhdsl/gsplyr", upgrade = "never")'
 RUN R -e 'remotes::install_github("fhdsl/ptplyr", upgrade = "never")'
 
 
-
-
 RUN mkdir -p /private/
 
 RUN ln -s /tmp /private/
-
 
 
 ADD . /app
