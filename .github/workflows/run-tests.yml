@@ -27,23 +27,5 @@ jobs:
 
       - name: Run the tests
         run: |
-          install.packages("devtools")
-          devtools::check(check_dir = "check")
+          source(.github/workflows/tests.R)
         shell: Rscript {0}
-
-      - name: Check testthat results
-        id: check_check
-        run: |
-          error_num=$(Rscript --vanilla '.github/workflows/check_testthat.R')
-          echo "error_num=$error_num" >> $GITHUB_OUTPUT
-
-      - name: Stop if there are errors!
-        if: ${{ steps.check_check.outputs.error_num != '0' }}
-        run: exit 1
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
-        with:
-          name:
-          path: check
