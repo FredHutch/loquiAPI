@@ -4,7 +4,7 @@
 \alias{health_check}
 \title{Health Check}
 \usage{
-health_check(api_url = api_url())
+health_check(api_url = loqui_api_url())
 }
 \arguments{
 \item{api_url}{URL for API}
