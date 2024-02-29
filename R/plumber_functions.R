@@ -100,7 +100,7 @@ download_video <- function(id, api_url, output_path) {
 
   response_status <- httr::stop_for_status(response)
   if (response_status$status_code == 200) {
-    message(paste0("Video downloaded to : ", output_path))
+    message(paste0("Video downloaded to ", output_path))
   } else {
     message(paste0("HTTP Error ", response_status$status_code))
   }
@@ -113,14 +113,3 @@ download_video <- function(id, api_url, output_path) {
   # Write binary data to output_path
   writeBin(binary_data, output_path)
 }
-
-
-
-
-
-
-
-
-
-
-

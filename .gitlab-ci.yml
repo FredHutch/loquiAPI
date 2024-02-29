@@ -38,6 +38,10 @@ deploy:
   script:
     - docker tag sc-registry.fredhutch.org/loquiapi:test sc-registry.fredhutch.org/loquiapi:latest
     - docker push sc-registry.fredhutch.org/loquiapi:latest
+    - docker tag sc-registry.fredhutch.org/loquiapi:latest fredhutch/loquiapi:$CI_COMMIT_SHORT_SHA
+    - docker push fredhutch/loquiapi:$CI_COMMIT_SHORT_SHA
+    - docker tag fredhutch/loquiapi:$CI_COMMIT_SHORT_SHA fredhutch/loquiapi:latest
+    - docker push fredhutch/loquiapi:latest
     - sleep 15
     - echo $SC_SWARM_CICD_SSH_KEY | base64 -d > ./sc_swarm_cicd_ssh_key
     - chmod 0400 ./sc_swarm_cicd_ssh_key
