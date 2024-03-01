@@ -7,22 +7,6 @@ loqui_api_url <- function() {
   "https://loquiapi.fredhutch.org"
 }
 
-#' Health Check
-#'
-#' Check if the API is running
-#'
-#' @param api_url URL for API
-#' @export
-health_check <- function(api_url = loqui_api_url()) {
-  # GET url
-  response <- httr::GET(paste0(api_url, "/health_check"))
-  httr::stop_for_status(response)
-
-  # response
-  jsonlite::fromJSON(httr::content(response, as = "text"), flatten = TRUE)
-}
-
-
 #' Generate video from Google Slides
 #'
 #' @param link Full URL to Google Slides with public access enabled
