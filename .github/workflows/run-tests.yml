@@ -1,0 +1,31 @@
+# Candace Savonen Feb 2024
+
+name: Run Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-build:
+    name: Run checks
+    runs-on: ubuntu-latest
+    container:
+      image: cansav09/loquiapi
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GH_PAT}}
+          fetch-depth: 0
+
+      - name: Run the tests
+        run: |
+          source(".github/workflows/tests.R")
+        shell: Rscript {0}
